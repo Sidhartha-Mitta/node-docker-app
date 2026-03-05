@@ -16,16 +16,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh '''
-                docker build -t node-docker-app:${BUILD_NUMBER} .
-                docker tag node-docker-app:${BUILD_NUMBER} sidharthamitta/node-docker-app:${BUILD_NUMBER}
-                '''
-            }
-        }
-
-         stage('Docker Login') {
+        stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-creds',
@@ -39,6 +30,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build -t node-docker-app:${BUILD_NUMBER} .
+                docker tag node-docker-app:${BUILD_NUMBER} sidharthamitta/node-docker-app:${BUILD_NUMBER}
+                '''
+            }
+        }
+
+         
 
 
         stage('Push Docker Image') {
