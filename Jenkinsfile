@@ -25,6 +25,22 @@ pipeline {
             }
         }
 
+         stage('Docker Login') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+
+                    sh '''
+                    echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                    '''
+                }
+            }
+        }
+
+
         stage('Push Docker Image') {
             steps {
                 sh 'docker push sidharthamitta/node-docker-app:${BUILD_NUMBER}'
