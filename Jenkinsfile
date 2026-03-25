@@ -10,11 +10,11 @@ pipeline {
             }
         }
 
-        // stage('Install Dependencies') {
-        //     steps {
-        //         sh 'npm install'
-        //     }
-        // }
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
 
         stage('Docker Login') {
             steps {
@@ -42,11 +42,11 @@ pipeline {
          
 
 
-        stage('Push Docker Image') {
-            steps {
-                sh 'docker push sidharthamitta/node-docker-app:${BUILD_NUMBER}'
-            }
-        }
+        // stage('Push Docker Image') {
+        //     steps {
+        //         sh 'docker push sidharthamitta/node-docker-app:${BUILD_NUMBER}'
+        //     }
+        // }
         
         stage('Create container') {
             steps {
